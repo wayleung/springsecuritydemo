@@ -4,6 +4,8 @@ import com.way.springsecuritydemo.constant.Code;
 import com.way.springsecuritydemo.controller.vo.Result;
 import com.way.springsecuritydemo.dao.entity.User;
 import com.way.springsecuritydemo.service.IUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,7 @@ import java.util.List;
 @RestController
 //@CrossOrigin
 @RequestMapping("/test/user")
+@Api(value = "UserController")
 public class UserController {
 
     @Autowired
@@ -25,30 +28,35 @@ public class UserController {
 
 
     @PostMapping("/user")
+    @ApiOperation(value = "insert")
     public Result<Integer> insert(@RequestBody User user){
         Integer changeRows = userService.insert(user);
         return new Result<Integer>(Code.SUCCESS.getCode(),true,Code.SUCCESS.getMessage(),changeRows);
     }
 
     @DeleteMapping("/user")
+    @ApiOperation(value = "deleteById")
     public Result<Integer> deleteById(@PathVariable(value = "id") Integer id){
         Integer changeRows = userService.deleteById(id);
         return new Result<Integer>(Code.SUCCESS.getCode(),true,Code.SUCCESS.getMessage(),changeRows);
     }
 
     @PutMapping("/user")
+    @ApiOperation(value = "updateById")
     public Result<Integer> updateById(@RequestBody User user){
         Integer changeRows = userService.updateById(user);
         return new Result<Integer>(Code.SUCCESS.getCode(),true,Code.SUCCESS.getMessage(),changeRows);
     }
 
     @PutMapping("/user/selective")
+    @ApiOperation(value = "updateSelective")
     public Result<Integer> updateSelective(@RequestBody User user){
         Integer changeRows = userService.updateSelective(user);
         return new Result<Integer>(Code.SUCCESS.getCode(),true,Code.SUCCESS.getMessage(),changeRows);
     }
 
     @GetMapping("/user/{id}")
+    @ApiOperation(value = "selectById")
 //    public Result<User> selectById(@RequestBody UserSelectByIdParam selectByIdParam){
     public Result<User> selectById(@PathVariable(value = "id") Integer id){
         User user = userService.selectById(id);
@@ -56,12 +64,14 @@ public class UserController {
     }
 
     @PostMapping("/user/condition")
+    @ApiOperation(value = "selectByConditions")
     public Result<List<User>> selectByConditions(@RequestBody User user){
         List<User> users = userService.selectByConditions(user);
         return new Result<List<User>>(Code.SUCCESS.getCode(),true,Code.SUCCESS.getMessage(),users);
     }
 
     @GetMapping("/user")
+    @ApiOperation(value = "selectAll")
     public Result<List<User>> selectAll(){
         List<User> users = userService.selectAll();
         return new Result<List<User>>(Code.SUCCESS.getCode(),true,Code.SUCCESS.getMessage(),users);
