@@ -2,6 +2,7 @@ package com.way.springsecuritydemo.controller;
 
 import com.way.springsecuritydemo.constant.Code;
 import com.way.springsecuritydemo.controller.vo.Result;
+import com.way.springsecuritydemo.controller.vo.UserLoginParamVo;
 import com.way.springsecuritydemo.dao.entity.User;
 import com.way.springsecuritydemo.service.IUserService;
 import io.swagger.annotations.Api;
@@ -27,14 +28,14 @@ public class UserController {
 
     @PostMapping("/user/login")
     @ApiOperation(value = "login")
-    public Result<User> login(@RequestBody User user){
-        String account = user.getAccount();
+    public Result<User> login(@RequestBody UserLoginParamVo userLoginParamVo){
+        String account = userLoginParamVo.getAccount();
         User userFound = userService.selectByAccount(account);
         if(userFound==null){
             return new Result<User>(Code.ACCOUNTNOTEXIST.getCode(),false,Code.ACCOUNTNOTEXIST.getMessage());
         }else{
             String passwordFound = userFound.getPassword();
-            if(!passwordFound.equals(user.getPassword())){
+            if(!passwordFound.equals(userLoginParamVo.getPassword())){
                 return new Result<User>(Code.PASSWORDWRONG.getCode(),false,Code.PASSWORDWRONG.getMessage());
             }else {
                 return new Result<User>(Code.SUCCESS.getCode(),true,Code.SUCCESS.getMessage(),userFound);

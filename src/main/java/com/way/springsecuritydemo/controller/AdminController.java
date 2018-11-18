@@ -1,6 +1,7 @@
 package com.way.springsecuritydemo.controller;
 
 import com.way.springsecuritydemo.constant.Code;
+import com.way.springsecuritydemo.controller.vo.AdminLoginParamVo;
 import com.way.springsecuritydemo.controller.vo.Result;
 import com.way.springsecuritydemo.dao.entity.Admin;
 import com.way.springsecuritydemo.service.IAdminService;
@@ -30,14 +31,14 @@ public class AdminController {
 
     @PostMapping("/admin/login")
     @ApiOperation(value = "login")
-    public Result<Admin> login(@RequestBody Admin admin){
-        String account = admin.getAccount();
+    public Result<Admin> login(@RequestBody AdminLoginParamVo adminParamVo){
+        String account = adminParamVo.getAccount();
         Admin adminFound = adminService.selectByAccount(account);
         if(adminFound==null){
             return new Result<Admin>(Code.ACCOUNTNOTEXIST.getCode(),false,Code.ACCOUNTNOTEXIST.getMessage());
         }else{
             String passwordFound = adminFound.getPassword();
-            if(!passwordFound.equals(admin.getPassword())){
+            if(!passwordFound.equals(adminParamVo.getPassword())){
                 return new Result<Admin>(Code.PASSWORDWRONG.getCode(),false,Code.PASSWORDWRONG.getMessage());
             }else {
                 return new Result<Admin>(Code.SUCCESS.getCode(),true,Code.SUCCESS.getMessage(),adminFound);
