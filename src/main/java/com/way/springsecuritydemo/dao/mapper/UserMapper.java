@@ -32,7 +32,10 @@ public interface UserMapper {
     Integer updateSelective(User user);
 
     @Select("SELECT * FROM `user` WHERE id =#{id};")
-    User selectById(Integer id);
+    User selectById(@Param(value = "id") Integer id);
+
+    @Select("SELECT * FROM `user` WHERE account =#{account};")
+    User selectByAccount(@Param(value = "account") String account);
 
     @SelectProvider(type = UserProvider.class,method = "selectByConditions")
     List<User> selectByConditions(User user);

@@ -32,7 +32,10 @@ public interface AdminMapper {
     Integer updateSelective(Admin admin);
 
     @Select("SELECT * FROM `admin` WHERE id =#{id};")
-    Admin selectById(Integer id);
+    Admin selectById(@Param(value = "id") Integer id);
+
+    @Select("SELECT * FROM `admin` WHERE account =#{account};")
+    Admin selectByAccount(@Param(value = "account") String account);
 
     @SelectProvider(type = AdminProvider.class,method = "selectByConditions")
     List<Admin> selectByConditions(Admin admin);

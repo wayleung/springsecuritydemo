@@ -45,6 +45,11 @@ public class AdminService implements IAdminService {
     }
 
     @Override
+    public Admin selectByAccount(String account) {
+        return adminMapper.selectByAccount(account);
+    }
+
+    @Override
     public List<Admin> selectByConditions(Admin admin) {
         return adminMapper.selectByConditions(admin);
     }

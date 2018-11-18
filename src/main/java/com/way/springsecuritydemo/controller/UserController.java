@@ -25,6 +25,24 @@ public class UserController {
     @Autowired
     IUserService userService;
 
+    @PostMapping("/user/login")
+    @ApiOperation(value = "login")
+    public Result<User> login(@RequestBody User user){
+        String account = user.getAccount();
+        User userFound = userService.selectByAccount(account);
+        if(userFound==null){
+            return new Result<User>(Code.ACCOUNTNOTEXIST.getCode(),false,Code.ACCOUNTNOTEXIST.getMessage());
+        }else{
+            String passwordFound = userFound.getPassword();
+            if(!passwordFound.equals(user.getPassword())){
+                return new Result<User>(Code.PASSWORDWRONG.getCode(),false,Code.PASSWORDWRONG.getMessage());
+            }else {
+                return new Result<User>(Code.SUCCESS.getCode(),true,Code.SUCCESS.getMessage(),userFound);
+            }
+        }
+
+    }
+
 
 
     @PostMapping("/user")

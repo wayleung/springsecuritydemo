@@ -22,6 +22,8 @@ public interface IUserService {
 
     User selectById(Integer id);
 
+    User selectByAccount(String account);
+
     List<User> selectByConditions(User user);
 
     List<User> selectAll();

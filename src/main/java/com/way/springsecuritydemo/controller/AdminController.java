@@ -28,6 +28,24 @@ public class AdminController {
     IAdminService adminService;
 
 
+    @PostMapping("/admin/login")
+    @ApiOperation(value = "login")
+    public Result<Admin> login(@RequestBody Admin admin){
+        String account = admin.getAccount();
+        Admin adminFound = adminService.selectByAccount(account);
+        if(adminFound==null){
+            return new Result<Admin>(Code.ACCOUNTNOTEXIST.getCode(),false,Code.ACCOUNTNOTEXIST.getMessage());
+        }else{
+            String passwordFound = adminFound.getPassword();
+            if(!passwordFound.equals(admin.getPassword())){
+                return new Result<Admin>(Code.PASSWORDWRONG.getCode(),false,Code.PASSWORDWRONG.getMessage());
+            }else {
+                return new Result<Admin>(Code.SUCCESS.getCode(),true,Code.SUCCESS.getMessage(),adminFound);
+            }
+        }
+
+    }
+
 
 
     @PostMapping("/admin")
@@ -45,7 +63,7 @@ public class AdminController {
     }
 
     @PutMapping("/admin")
-    @ApiOperation(value = "admin")
+    @ApiOperation(value = "updateById")
     public Result<Integer> updateById(@RequestBody Admin admin){
         Integer changeRows = adminService.updateById(admin);
         return new Result<Integer>(Code.SUCCESS.getCode(),true,Code.SUCCESS.getMessage(),changeRows);
@@ -79,4 +97,6 @@ public class AdminController {
         List<Admin> admins = adminService.selectAll();
         return new Result<List<Admin>>(Code.SUCCESS.getCode(),true,Code.SUCCESS.getMessage(),admins);
     }
+
+
 }

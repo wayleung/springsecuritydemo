@@ -45,6 +45,11 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public User selectByAccount(String account) {
+        return userMapper.selectByAccount(account);
+    }
+
+    @Override
     public List<User> selectByConditions(User user) {
         return userMapper.selectByConditions(user);
     }

@@ -21,6 +21,8 @@ public interface IAdminService {
 
     Admin selectById(Integer id);
 
+    Admin selectByAccount(String account);
+
     List<Admin> selectByConditions(Admin admin);
 
     List<Admin> selectAll();
