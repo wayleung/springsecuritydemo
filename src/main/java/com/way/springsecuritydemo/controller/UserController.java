@@ -19,7 +19,7 @@ import java.util.List;
  */
 @RestController
 //@CrossOrigin
-@RequestMapping("/test/user")
+@RequestMapping("/test")
 @Api(value = "UserController")
 public class UserController {
 
@@ -43,6 +43,13 @@ public class UserController {
         }
 
     }
+
+    @GetMapping("/user/logout")
+    @ApiOperation(value = "logout")
+    public Result logout(){
+        return new Result<User>(Code.SUCCESS.getCode(),true,Code.SUCCESS.getMessage());
+    }
+
 
 
 

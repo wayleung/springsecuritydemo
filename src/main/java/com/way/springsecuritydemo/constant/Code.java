@@ -15,7 +15,12 @@ public enum  Code {
 
     SUCCESS("S0001","成功！"),
     FAIL("F0001","失败！"),
-    ERROR("E0001","出错!");
+    ERROR("E0001","出错!"),
+    ACCOUNTNOTEXIST("F0002","用户不存在"),
+    PASSWORDWRONG("F0003","密码不正确"),
+    ACCOUNTNOTEXISTORPASSWORDWRONG("F0002","用户不存在或密码不正确"),
+
+    ;
 
     private String code;
     private String message;

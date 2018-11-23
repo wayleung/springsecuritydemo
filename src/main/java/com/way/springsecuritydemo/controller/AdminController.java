@@ -21,7 +21,7 @@ import java.util.List;
  */
 @RestController
 //@CrossOrigin
-@RequestMapping("/test/admin")
+@RequestMapping("/test")
 @Api(value = "AdminController")
 public class AdminController {
 
@@ -29,9 +29,9 @@ public class AdminController {
     IAdminService adminService;
 
 
-    @PostMapping("/admin/login")
+    @GetMapping("/admin/login")
     @ApiOperation(value = "login")
-    public Result<Admin> login(@RequestBody AdminLoginParamVo adminParamVo){
+    public Result<Admin> login(AdminLoginParamVo adminParamVo){
         String account = adminParamVo.getAccount();
         Admin adminFound = adminService.selectByAccount(account);
         if(adminFound==null){
@@ -45,6 +45,12 @@ public class AdminController {
             }
         }
 
+    }
+
+    @GetMapping("/admin/logout")
+    @ApiOperation(value = "logout")
+    public Result logout(){
+        return new Result<Admin>(Code.SUCCESS.getCode(),true,Code.SUCCESS.getMessage());
     }
 
 
